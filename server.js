@@ -15,7 +15,7 @@ ${subdomain}.ic.cafe {
 
 const main = async () => {
   const records = [];
-  const { stdout, stderr } = await exec('dfx canister call subdomains getAll');
+  const { stdout, stderr } = await exec('dfx canister --network ic call subdomains getAll');
   if (stderr) {
     console.log(stderr);
   }
@@ -25,7 +25,7 @@ const main = async () => {
   while (match != null) {
     if (match.length > 1) {
       const [_, subdomain, canister] = match;
-      
+
       records.push({
         subdomain,
         canister,
