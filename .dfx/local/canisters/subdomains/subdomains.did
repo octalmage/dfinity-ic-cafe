@@ -1,0 +1,19 @@
+type SubDomainMap = AssocList;
+type SubDomain = text;
+type List = 
+ opt record {
+       record {
+         SubDomain;
+         Entry;
+       };
+       List;
+     };
+type Entry = record {canister: Canister;};
+type Canister = text;
+type AssocList = List;
+service : {
+  getAll: () -> (SubDomainMap) query;
+  insert: (SubDomain, Entry) -> ();
+  lookup: (SubDomain) -> (opt Entry) query;
+  whoami: () -> (principal);
+}
