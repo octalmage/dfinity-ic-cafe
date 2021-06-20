@@ -1,8 +1,7 @@
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 
-const regex = /record\s{\s\"(.*)\";\srecord\s{\s.*\s=\s\"(.*)\"/gm;
-
+const regex = /record\s{\s\"(.*?)\";.*?2_631_180_839\s=\s\"(.*?)\";/gm;
 
 const makeProxy = ({ subdomain, canister }) => `
 ${subdomain}.ic.cafe {
