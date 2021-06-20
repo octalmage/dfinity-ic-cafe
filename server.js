@@ -14,7 +14,7 @@ ${subdomain}.ic.cafe {
 
 const main = async () => {
   const records = [];
-  const { stdout, stderr } = await exec('dfx canister --network ic call subdomains getAll');
+  const { stdout, stderr } = await exec('dfx canister --network ic call subdomains getAll --output idl');
   if (stderr) {
     console.log(stderr);
   }
