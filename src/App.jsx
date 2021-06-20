@@ -1,66 +1,71 @@
 import React, { useCallback, useEffect, useState } from "react"
 import logo from "./assets/logo.svg"
 import "./App.css"
-import { counter } from "./agent"
+import { subdomains } from "./agent"
 
 function App() {
-  const [count, setCount] = useState()
+  const doInsert = async () => {
+    let subdomain = document.getElementById("newEntryName").value;
+    let canister = document.getElementById("newEntryCanister").value;
+    subdomains.insert(subdomain, { canister });
 
-  const refreshCounter = useCallback(async () => {
-    const res = await counter.getValue()
-    setCount(res.toString())
-  }, [])
+    document.getElementById("newEntryName").value = '';
+    document.getElementById("newEntryCanister").value = '';
+  }
 
-  useEffect(() => {
-    refreshCounter()
-  }, [])
+  const lookup = async () => {
+    let name = document.getElementById("lookupName").value;
+    subdomains.lookup(name).then(opt_entry => {
+      let entry = opt_entry.length > 0 ? opt_entry[0] : null;
+      if (entry === null || entry === undefined) {
+        entry = {
+          canister: "",
+        };
+      }
+      document.getElementById("newEntryName").value = name;
+      document.getElementById("newEntryCanister").value = entry.canister;
+    });
+  }
 
-  const onIncrementClick = useCallback(async () => {
-    await counter.increment()
-    refreshCounter()
-  }, [counter])
+  // const refreshCounter = useCallback(async () => {
+  //   const res = await counter.getValue()
+  //   setCount(res.toString())
+  // }, [])
+
+  // useEffect(() => {
+  //   refreshCounter()
+  // }, [])
+
+  // const onIncrementClick = useCallback(async () => {
+  //   await counter.increment()
+  //   refreshCounter()
+  // }, [counter])
 
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Internet Computer + Vite + React!</p>
         <p>
-          <button className="demo-button" onClick={onIncrementClick}>
+          {/* <button className="demo-button" onClick={onIncrementClick}>
             count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {" | "}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-          {" | "}
-          <a
-            className="App-link"
-            href="https://sdk.dfinity.org/docs/developers-guide/sdk-guide.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            IC SDK Docs
-          </a>
-        </p>
+          </button> */}
+        </p>   
+        <div>
+        <h1>Internet Computer Cafe</h1>
+        <p>Get a free ic.cafe subdomain!</p>
+        <div>
+          <table>
+            <tr><td>Sub Domain:</td><td><input required id="newEntryName"></input></td></tr>
+            <tr><td>Canister ID:</td><td><input required id="newEntryCanister"></input></td></tr>
+          </table>
+          <button onClick={() => doInsert()}>Claim</button>
+        </div>
+        <div>
+          Lookup Name: <input id="lookupName"></input> <button onClick={
+            () => lookup()
+          }>Lookup</button>
+        </div>
+      </div>
       </header>
     </div>
   )
