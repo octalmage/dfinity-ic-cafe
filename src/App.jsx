@@ -45,27 +45,18 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          {/* <button className="demo-button" onClick={onIncrementClick}>
-            count is: {count}
-          </button> */}
-        </p>   
         <div>
         <h1>Internet Computer Cafe</h1>
         <p>Get a free ic.cafe subdomain!</p>
-        <div>
-          <table>
-            <tr><td>Sub Domain:</td><td><input required id="newEntryName"></input></td></tr>
-            <tr><td>Canister ID:</td><td><input required id="newEntryCanister"></input></td></tr>
-          </table>
+        <p><strong>Important: This is a temporary centralized solution with no uptime guarantees. Use at your own risk!</strong></p>
+        <center>
+
+          Sub Domain: <input required id="newEntryName"></input> <br />
+          Canister ID: <input required id="newEntryCanister"></input>
+          </center>
           <button onClick={() => doInsert()}>Claim</button>
         </div>
-        <div>
-          Lookup Name: <input id="lookupName"></input> <button onClick={
-            () => lookup()
-          }>Lookup</button>
-        </div>
-      </div>
+ 
       </header>
     </div>
   )
